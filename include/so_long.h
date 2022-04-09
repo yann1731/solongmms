@@ -11,5 +11,8 @@
 char	**convertmaptostring(char *mapfile);
 int		countlines(char *mapfile);
 int		checkmap(char **map);
+int		validchar(char c);
+int		checkboundaries(char **map, int lines);
+int		checkbody(char **map, int lines);
 
 #endif
