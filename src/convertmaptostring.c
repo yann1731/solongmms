@@ -20,6 +20,8 @@ char	**convertmaptostring(char *mapfile)
 		free(str);
 		i++;
 	}
+	lines = countlines(mapfile);
+	map[lines - 1] = ft_strjoinfree(map[lines - 1], "\n");
 	close(fd);
 	return (map);
 }

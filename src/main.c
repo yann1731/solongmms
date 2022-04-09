@@ -34,8 +34,14 @@ int main(int argc, char *argv[])
 	char	**map;
 	int		mapstatus;
 
+	if (argc != 2)
+	{
+		write(2, "Needs map as input\n", ft_strlen("Needs map as input\n"));
+		exit(1);
+	}
 	map = convertmaptostring(argv[1]);
 	mapstatus = checkmap(map);
+	printf("%d\n", mapstatus);
 	// data.mlx = mlx_init();
 	// data.win = mlx_new_window(data.mlx, 1024, 768, "So long, and thanks for all the fish!");
 	// mlx_string_put(data.mlx, data.win, 334, 30, 0x913FDA, "It's dangerous to go alone. Take this!");
