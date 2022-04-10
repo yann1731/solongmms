@@ -18,6 +18,7 @@ int	checkmap(char **map)
 		return (0);
 	if (checkcriteria(map, lines, info) == 0)
 		return (0);
-	
+	if (checkshape(map, lines) == 0)
+		return (0);
 	return (1);
 }

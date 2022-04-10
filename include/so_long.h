@@ -23,5 +23,6 @@ int		checkboundaries(char **map, int lines);
 int		checkbody(char **map, int lines);
 int		checkcriteria(char **map, int lines, t_criteria info);
 int		parsecriteria(t_criteria info);
+int		checkshape(char **map, int lines);
 
 #endif
