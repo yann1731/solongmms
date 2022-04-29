@@ -1,12 +1,5 @@
 #include "../include/so_long.h"
 
-typedef struct	s_data
-{
-	void	*img;
-	int		img_width;
-	int		img_height;
-}	t_data;
-
 int	closeprogram(int keycode, t_vars *data)
 {
 	if (keycode == 53)
@@ -14,24 +7,6 @@ int	closeprogram(int keycode, t_vars *data)
 		mlx_destroy_window(data->mlx, data->win);
 		exit(0);
 	}
-	if (keycode != 53)
-	{
-		data->counter++;
-		if (data->counter == 40)
-			printf("coucou\n");
-	}
-	return (0);
-}
-
-int	resetcounter(int keycode, t_vars *data)
-{
-	data->counter = 0;
-	return (0);
-}
-
-int	printkeycode(int keycode, t_vars *data)
-{
-	printf("%d\n", keycode);
 	return (0);
 }
 
@@ -47,13 +22,28 @@ int	longkeydown(int keycode, t_vars *data)
 	return (0);
 }
 
-int	printmousepos(int x, int y, t_vars *data)
+//x and y coordinates passed by adressed for values
+//to be modified in accordance with the length of the map on the x axis and y axis
+void	get_map_size(char **map, int *y_map, int *x_map)
 {
-	return (0);
+	*y_map = 0;
+	*x_map = 0;
+	while (map[*y_map])
+		*y_map += 1;
+	while (map[0][*x_map] != '\n')
+		*x_map += 1;
+}
+
+//Similar to player_init but will init different images to be used for walls, floors etc aswell as the size of the map
+//given as x and y
+void	env_init(t_env *env, t_vars vars, char **map)
+{
+	env->exit.img = mlx_xpm_file_to_image(vars.mlx, "../assets/tilesets/exit/exit.xpm", &env->exit.width, &env->exit.height);
+	env->exit.addr = mlx_get_data_addr(env->exit.img, &env->exit.bits_per_pixel, &env->exit.line_length, &env->exit.endian);
+	get_map_size(map, &env->y_map, &env->x_map);
 }
 
 /*  
-
 ON_KEYDOWN		2	int (*f)(int keycode, void *param)
 ON_KEYUP*		3	int (*f)(int keycode, void *param)
 ON_MOUSEDOWN*	4	int (*f)(int button, int x, int y, void *param)
@@ -61,37 +51,30 @@ ON_MOUSEUP		5	int (*f)(int button, int x, int y, void *param)
 ON_MOUSEMOVE	6	int (*f)(int x, int y, void *param)
 ON_EXPOSE*		12	int (*f)(void *param)
 ON_DESTROY		17	int (*f)(void *param)
-
 */
 
 int main(int argc, char *argv[])
 {
-	t_vars	data;
-	t_fence	fence;
-	void	*img;
-	char	**map;
-	char	*relativepath = "../assets/tilesets/picket_hor.xpm";
-	int	x,y;
-	x = 600;
-	y = 400;
+	t_vars		vars;
+	t_env		env;
+	t_player	player;
+	char		**map;
 
 	checkarg(argc);
 	map = convertmaptostring(argv[1]);
 	errorhandling(checkmap(map));
-	data.mlx = mlx_init();
-	data.win = mlx_new_window(data.mlx, x, y, "So long, and thanks for all the fish!");
-	data.counter = 0;
-	fence.img2 = mlx_xpm_file_to_image(data.mlx, "../assets/characters/player.xpm", &fence.img_width2, &fence.img_height2);
-	fence.img1 = mlx_xpm_file_to_image(data.mlx, relativepath, &fence.img_width1, &fence.img_height1);
-	mlx_put_image_to_window(data.mlx, data.win, fence.img1, 0, 0);
-	mlx_put_image_to_window(data.mlx, data.win, fence.img2, 14, 0);
-	mlx_hook(data.win, ON_KEYDOWN, 0, closeprogram, &data);
-	mlx_hook(data.win, ON_DESTROY, 0, closeondestroy, &data);
-	mlx_hook(data.win, ON_KEYUP, 0, resetcounter, &data);
-	mlx_loop(data.mlx);
+	vars.mlx = mlx_init();
+	vars.win = mlx_new_window(vars.mlx, 1920, 1080, "So long, and thanks for all the fish!");
+	player_init(&player, vars, map);
+	//env_init(&env, vars, map);
+	//player.img1 = image_scale_init(&player.img1, 3.0, vars.mlx);
+	//env.exit1 = image_scale_init(&env.exit1, 4.0, vars.mlx);
+	mlx_put_image_to_window(vars.mlx, vars.win, player.img1.img, 60, 60);
+	mlx_hook(vars.win, ON_KEYDOWN, 0, closeprogram, &vars);
+	mlx_hook(vars.win, ON_DESTROY, 0, closeondestroy, &vars);
+	mlx_loop(vars.mlx);
 
 	/******* Function defs ********/
-
 	// mlx_clear_window;
 	// mlx_destroy_image;
 	// mlx_destroy_window;
