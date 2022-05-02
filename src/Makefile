@@ -14,7 +14,9 @@ LIBFTPATH =		libft/
 
 LIBFT =			libft.a
 
-MLX =			-lmlx
+MLX =			libmlx.dylib
+
+FRAMEWORK =		-lmlx -framework OpenGL -framework AppKit
 
 RM =			rm -f
 
@@ -25,7 +27,7 @@ ${LIBFT}:
 				make -C ${LIBFTPATH} all
 
 ${NAME}:		${OBJS} ${LIBFT}
-				${CC} ${CFLAGS} ${OBJS} ${MLX} ${LIBFTPATH}${LIBFT} -o ${NAME}
+				${CC} ${CFLAGS} ${OBJS} ${FRAMEWORK} ${LIBFTPATH}${LIBFT} -o ${NAME}
 
 all: ${NAME}
 

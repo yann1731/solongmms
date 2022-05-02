@@ -1,13 +1,13 @@
 #include "../include/so_long.h"
 
-int	closeprogram(int keycode, t_player *player)
+int	render_player(int keycode, t_player *player)
 {
 	if (keycode == ESC)
 	{
 		mlx_destroy_window(player->vars.mlx, player->vars.win);
 		exit(0);
 	}
-	printf("%d\n", keycode);
+	player->steps += 1;
 	if (keycode == UPKEY)
 		player->y_pos -= 1;
 	if (keycode == DOWNKEY)
@@ -49,34 +49,15 @@ void	get_map_size(char **map, int *y_map, int *x_map)
 		*x_map += 1;
 }
 
-void	update_frame(t_player *player, int keycode)
-{
-	mlx_clear_window(player->vars.mlx, player->vars.win);
-	player->steps += 1;
-	if (keycode == UPKEY)
-		player->y_pos -= 1;
-	if (keycode == DOWNKEY)
-		player->y_pos += 1;
-	if (keycode == LEFTKEY)
-		player->x_pos -= 1;
-	if (keycode == RIGHTKEY)
-		player->x_pos += 1;
-}
-
 //Similar to player_init but will init different images to be used for walls, floors etc aswell as the size of the map
 //given as x and y
-void	env_init(t_env *env, t_vars vars, char **map)
-{
-	my_xpm_file_to_image("exit.xpm", vars, &env->exit);
-	get_map_size(map, &env->y_len, &env->x_len);
-}
 
 int	render(t_player *player)
 {
 	mlx_clear_window(player->vars.mlx, player->vars.win);
 	mlx_put_image_to_window(player->vars.mlx, player->vars.win,
-		player->img.img, (player->x_pos * 16), (player->y_pos * 16));
-	mlx_key_hook(player->vars.win, closeprogram, player);
+		player->pimg.img, (player->x_pos * 16), (player->y_pos * 16));
+	mlx_key_hook(player->vars.win, render_player, player);
 	mlx_string_put(player->vars.mlx, player->vars.win, 5, 15, 0xFFFFFF, "Steps:");
 	mlx_string_put(player->vars.mlx, player->vars.win, 75, 15, 0xFFFFFF, ft_itoa((long long) player->steps));
 	return (0);
@@ -99,7 +80,6 @@ ON_DESTROY		17	int (*f)(void *param)
 
 int main(int argc, char *argv[])
 {
-	t_env		env;
 	t_player	player;
 	char		**map;
 
@@ -108,13 +88,16 @@ int main(int argc, char *argv[])
 	errorhandling(checkmap(map));
 	player.vars.mlx = mlx_init();
 	player.vars.win = mlx_new_window(player.vars.mlx, 600, 400, "So long, and thanks for all the fish!");
+	mlx_do_key_autorepeaton(player.vars.mlx);
 	player_init(&player, map);
-	env_init(&env, player.vars, map);
 	mlx_hook(player.vars.win, ON_DESTROY, 0, closeondestroy, &player.vars);
 	mlx_loop_hook(player.vars.mlx, render, &player);
 	mlx_loop(player.vars.mlx);
+	
+	return (0);
+}
 
-	/******* Function defs ********/
+/******* Function defs ********/
 	// mlx_clear_window;
 	// mlx_destroy_image;
 	// mlx_destroy_window;
@@ -142,6 +125,3 @@ int main(int argc, char *argv[])
 	// mlx_sync;
 	// mlx_xpm_file_to_image;
 	// mlx_xpm_to_image;
-	
-	return (0);
-}
