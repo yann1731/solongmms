@@ -16,8 +16,23 @@ enum {
 	ON_MOUSEUP = 5,
 	ON_MOUSEMOVE = 6,
 	ON_EXPOSE = 12,
-	ON_DESTROY = 17
+	ON_DESTROY = 17,
+	UPKEY = 126,
+	DOWNKEY = 125,
+	LEFTKEY = 123,
+	RIGHTKEY = 124,
+	ESC = 53
 };
+//126 = keyup
+//125 = keydown
+//123 = keyleft
+//124 = keyright
+
+typedef struct s_vars
+{
+	void	*mlx;
+	void	*win;
+}	t_vars;
 
 typedef struct s_criteria
 {
@@ -39,12 +54,8 @@ typedef struct	s_data
 
 typedef struct s_player
 {
-	t_data	img1;
-	t_data	img2;
-	t_data	img3;
-	t_data	img4;
-	t_data	img5;
-	t_data	img6;
+	t_vars	vars;
+	t_data	img;
 	int		x_pos;
 	int		y_pos;
 	int		steps;
@@ -52,24 +63,14 @@ typedef struct s_player
 
 typedef struct s_env
 {
-	t_data	floor1;
-	t_data	floor2;
-	t_data	floor3;
-	t_data	floor4;
-	t_data	wall1;
-	t_data	wall2;
-	t_data	wall3;
-	t_data	wall4;
 	t_data	exit;
-	int		x_map;
-	int		y_map;
+	t_data	vert_wall;
+	t_data	hor_wall1;
+	t_data	hor_wall2;
+	t_data	floor;
+	int		x_len;
+	int		y_len;
 }	t_env;
-
-typedef struct s_vars
-{
-	void	*mlx;
-	void	*win;
-}	t_vars;
 
 char			**convertmaptostring(char *mapfile);
 int				countlines(char *mapfile);
@@ -87,8 +88,10 @@ unsigned int    get_colors(t_data *data, int x, int y);
 t_data    		image_scale_init(t_data *image, float scale, void *mlx);
 void			my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void			get_player_pos(char **map, int *x_pos, int *y_pos);
-void			player_init(t_player *player, t_vars vars, char **map);
+void			player_init(t_player *player, char **map);
 void			my_xpm_file_to_image(char	*pathtoimg, t_vars vars, t_data *img);
 void			my_get_data_addr(t_data *img);
+int				render(t_player *player);
+void			update_frame(t_player *player, int keycode);
 
 #endif

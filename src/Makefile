@@ -1,4 +1,6 @@
-SRCS =			checkarg.c checkmap.c checkmap_utils.c errorhandling.c main.c
+SRCS =			checkarg.c checkmap.c checkmap_utils.c errorhandling.c main.c image_scale_init.c \
+				my_mlx_pixel_put.c get_colors.c player_init.c get_player_pos.c my_xpm_file_to_image.c \
+				my_get_data_addr.c
 
 OBJS =			${SRCS:.c=.o}
 
