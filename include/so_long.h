@@ -54,23 +54,19 @@ typedef struct	s_data
 
 typedef struct s_player
 {
+	char	**map;
 	t_vars	vars;
-	t_data	img;
+	t_data	pimg;
+	t_data	floor;
+	t_data	wall;
+	t_data	coll;
+	t_data	exit;
 	int		x_pos;
 	int		y_pos;
+	int		x_map;
+	int		y_map;
 	int		steps;
 }	t_player;
-
-typedef struct s_env
-{
-	t_data	exit;
-	t_data	vert_wall;
-	t_data	hor_wall1;
-	t_data	hor_wall2;
-	t_data	floor;
-	int		x_len;
-	int		y_len;
-}	t_env;
 
 char			**convertmaptostring(char *mapfile);
 int				countlines(char *mapfile);
