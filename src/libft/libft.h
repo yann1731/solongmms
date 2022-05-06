@@ -137,5 +137,6 @@ void	printchar(int c, int *res);
 void	ft_putnbr_base(unsigned int n, char *base, int *res);
 char    *get_next_line(int fd);
 char	*ft_strjoinfree(char const *s1, char const *s2);
+int		ft_strnstrint(const char *haystack, const char *needle, size_t len);
 
 #endif

@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   checkmap_utils.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yst-laur <marvin@42quebec.com>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/06 18:18:47 by yst-laur          #+#    #+#             */
+/*   Updated: 2022/05/06 18:18:52 by yst-laur         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "../include/so_long.h"
 
 char	**convertmaptostring(char *mapfile)
@@ -11,6 +22,7 @@ char	**convertmaptostring(char *mapfile)
 	i = 0;
 	lines = countlines(mapfile);
 	fd = open(mapfile, O_RDONLY);
+	errorhandling(fd);
 	map = malloc((lines + 1) * sizeof(char *));
 	map[lines] = NULL;
 	while (lines-- > 0)
@@ -34,6 +46,7 @@ int	countlines(char *mapfile)
 
 	i = 0;
 	fd = open(mapfile, O_RDONLY);
+	errorhandling(fd);
 	while (read(fd, &c, 1) != 0)
 	{
 		if (c == '\n')

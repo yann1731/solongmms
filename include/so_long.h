@@ -114,5 +114,6 @@ void			replace_p(t_player *player);
 void			update_coll(t_player *player, int x, int y);
 void			update_ocoll(t_player *player, int x, int y);
 void			update_exit(t_player *player, int x, int y);
+int				checkmapformat(char *argv);
 
 #endif
