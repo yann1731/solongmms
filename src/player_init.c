@@ -14,9 +14,15 @@ void	player_init(t_player *player, char **map)
 	my_xpm_file_to_image("player1.xpm", player->vars, &player->pimg);
 	my_xpm_file_to_image("wall.xpm", player->vars, &player->wall);
 	my_xpm_file_to_image("wooden.xpm", player->vars, &player->floor);
+	my_xpm_file_to_image("chest.xpm", player->vars, &player->coll);
+	my_xpm_file_to_image("openchest.xpm", player->vars, &player->o_coll);
 	get_player_pos(map, &player->y_pos, &player->x_pos);
 	player->s_floor = image_scale_init(&player->floor, 2.0, player->vars.mlx);
 	player->s_pimg = image_scale_init(&player->pimg, 2.0, player->vars.mlx);
 	player->s_exit = image_scale_init(&player->exit, 2.0, player->vars.mlx);
+	player->s_coll = image_scale_init(&player->coll, 2.0, player->vars.mlx);
+	player->s_o_coll = image_scale_init(&player->o_coll, 2.0, player->vars.mlx);
 	player->steps = 0;
+	player->held_collectibles = 0;
+	player->max_collectibles = checkcoll(player->map);
 }

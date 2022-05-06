@@ -61,6 +61,9 @@ typedef struct s_player
 	t_data	s_floor;
 	t_data	wall;
 	t_data	coll;
+	t_data	o_coll;
+	t_data	s_coll;
+	t_data	s_o_coll;
 	t_data	exit;
 	t_data	s_exit;
 	int		x_pos;
@@ -68,6 +71,8 @@ typedef struct s_player
 	int		x_map;
 	int		y_map;
 	int		steps;
+	int		max_collectibles;
+	int		held_collectibles;
 }	t_player;
 
 char			**convertmaptostring(char *mapfile);
@@ -100,5 +105,14 @@ void			move_down(t_player *player);
 void			move_left(t_player *player);
 void			move_right(t_player *player);
 void			my_mlx_put_img(t_vars *vars, t_data *img, int x, int y);
+int				checkcoll(char **map);
+int				move_player(int keycode, t_player *player);
+int				render(t_player *player);
+void			render_walls(t_player *player);
+void			render_floor(t_player *player);
+void			replace_p(t_player *player);
+void			update_coll(t_player *player, int x, int y);
+void			update_ocoll(t_player *player, int x, int y);
+void			update_exit(t_player *player, int x, int y);
 
 #endif

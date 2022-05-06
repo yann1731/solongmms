@@ -1,7 +1,8 @@
 SRCS =			checkarg.c checkmap.c checkmap_utils.c errorhandling.c main.c image_scale_init.c \
 				my_mlx_pixel_put.c get_colors.c player_init.c get_player_pos.c my_xpm_file_to_image.c \
 				my_get_data_addr.c closeondestroy.c get_map_size.c closeprogram.c move_up.c move_down.c \
-				move_left.c move_right.c
+				move_left.c move_right.c my_mlx_put_img.c checkcoll.c move_player.c render_floor.c \
+				render_walls.c render.c replace_p.c update_coll.c update_ocoll.c update_exit.c
 
 OBJS =			${SRCS:.c=.o}
 
