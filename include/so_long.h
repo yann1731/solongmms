@@ -99,5 +99,6 @@ void			move_up(t_player *player);
 void			move_down(t_player *player);
 void			move_left(t_player *player);
 void			move_right(t_player *player);
+void			my_mlx_put_img(t_vars *vars, t_data *img, int x, int y);
 
 #endif

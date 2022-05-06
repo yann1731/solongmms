@@ -1,5 +1,15 @@
 #include "../include/so_long.h"
 
+void	replace_p(t_player *player)
+{
+	int	y;
+	int	x;
+
+	y = player->y_pos;
+	x = player->x_pos;
+	player->map[y][x] = '0';
+}
+
 void	render_floor(t_player *player)
 {
 	int x;
@@ -7,11 +17,12 @@ void	render_floor(t_player *player)
 	
 	x = 0;
 	y = 0;
+	replace_p(player);
 	while (player->map[y])
 	{
 		while (player->map[y][x])
 		{
-			if (player->map[y][x] == '0' || player->map[y][x] == 'P' || player->map[y][x] == 'C' || player->map[y][x] == 'E')
+			if (player->map[y][x] == '0' || player->map[y][x] == 'C' || player->map[y][x] == 'E')
 				mlx_put_image_to_window(player->vars.mlx, player->vars.win, player->s_floor.img, (x * 32), (y * 32));
 			if (player->map[y][x] == 'E')
 				mlx_put_image_to_window(player->vars.mlx, player->vars.win, player->s_exit.img, (x * 32), (y * 32));
@@ -70,12 +81,8 @@ int	move_player(int keycode, t_player *player)
 
 int	render(t_player *player)
 {
-	mlx_sync(MLX_SYNC_IMAGE_WRITABLE, player->s_floor.img);
-	mlx_sync(MLX_SYNC_IMAGE_WRITABLE, player->s_exit.img);
-	mlx_sync(MLX_SYNC_IMAGE_WRITABLE, player->s_pimg.img);
-	mlx_put_image_to_window(player->vars.mlx, player->vars.win, player->s_pimg.img, (player->x_pos * 32), (player->y_pos * 32));
+	my_mlx_put_img(&player->vars, &player->s_pimg, (player->x_pos * 32), (player->y_pos * 32));
 	mlx_hook(player->vars.win, ON_KEYDOWN, 0, move_player, player);
-	mlx_sync(MLX_SYNC_WIN_CMD_COMPLETED, player->vars.win);
 	return (0);
 }
 

@@ -28,7 +28,7 @@ ${LIBFT}:
 				make -C ${LIBFTPATH} all
 
 ${NAME}:		${OBJS} ${LIBFT}
-				${CC} ${CFLAGS} ${FRAMEWORK} ${OBJS} ${LIBFTPATH}${LIBFT} -o ${NAME}
+				@${CC} ${CFLAGS} ${FRAMEWORK} ${OBJS} ${LIBFTPATH}${LIBFT} -o ${NAME}
 
 all: ${NAME}
 
