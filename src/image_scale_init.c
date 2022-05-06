@@ -10,7 +10,7 @@ t_data    image_scale_init(t_data *image, float scale, void *mlx)
     image_scale.width = image->width * scale;
     image_scale.height = image->height * scale;
     image_scale.img = mlx_new_image(mlx, image_scale.width, image_scale.height);
-    image_scale.addr = mlx_get_data_addr(image_scale.img, &image_scale.bits_per_pixel, &image_scale.line_length, &image_scale.endian);
+    image_scale.addr = mlx_get_data_addr(image_scale.img, &image_scale.bits_per_pixel, &image_scale.size_line, &image_scale.endian);
     x = 0;
     while (x < (image->width * scale))
     {

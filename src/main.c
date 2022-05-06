@@ -1,52 +1,50 @@
 #include "../include/so_long.h"
 
+void	render_map(t_player *player)
+{
+	int x;
+	int y;
+	
+	x = 0;
+	y = 0;
+	while (player->map[y])
+	{
+		while (player->map[y][x])
+		{
+			if (player->map[y][x] == '1')
+				mlx_put_image_to_window(player->vars.mlx, player->vars.win, player->wall.img, (x * 32), (y * 32));
+			if (player->map[y][x] == '0' || player->map[y][x] == 'P' || player->map[y][x] == 'C' || player->map[y][x] == 'E')
+				mlx_put_image_to_window(player->vars.mlx, player->vars.win, player->s_floor.img, (x * 32), (y * 32));
+			if (player->map[y][x] == 'E')
+				mlx_put_image_to_window(player->vars.mlx, player->vars.win, player->s_exit.img, (x * 32), (y * 32));
+			x++;
+		}
+		mlx_put_image_to_window(player->vars.mlx, player->vars.win, player->s_pimg.img, (player->x_pos * 32), (player->y_pos * 32));
+		y++;
+		x = 0;
+	}
+}
+
 int	render_player(int keycode, t_player *player)
 {
+	int		x;
+	int		y;
+	char	**map;
+
+	x = player->x_pos;
+	y = player->y_pos;
+	map = player->map;
 	if (keycode == ESC)
-	{
-		mlx_destroy_window(player->vars.mlx, player->vars.win);
-		exit(0);
-	}
-	player->steps += 1;
-	if (keycode == UPKEY)
-		player->y_pos -= 1;
-	if (keycode == DOWNKEY)
-		player->y_pos += 1;
-	if (keycode == LEFTKEY)
-		player->x_pos -= 1;
-	if (keycode == RIGHTKEY)
-		player->x_pos += 1;
+		closeprogram(player);
+	if (keycode == UPKEY && map[y - 1][x] != '1')
+		move_up(player);
+	if (keycode == DOWNKEY && map[y + 1][x] != '1')
+		move_down(player);
+	if (keycode == LEFTKEY && map[y][x - 1] != '1')
+		move_left(player);
+	if (keycode == RIGHTKEY && map[y][x + 1] != '1')
+		move_right(player);
 	return (0);
-}
-
-int	printkeycode(int keycode, t_player *player)
-{
-	printf("%d\n", keycode);
-	return (0);
-}
-
-int	closeondestroy(t_vars *data)
-{
-	mlx_destroy_window(data->mlx, data->win);
-	exit(0);
-}
-
-int	longkeydown(int keycode, t_vars *data)
-{
-	printf("%d\n", keycode);
-	return (0);
-}
-
-//x and y coordinates passed by adressed for values
-//to be modified in accordance with the length of the map on the x axis and y axis
-void	get_map_size(char **map, int *y_map, int *x_map)
-{
-	*y_map = 0;
-	*x_map = 0;
-	while (map[*y_map])
-		*y_map += 1;
-	while (map[0][*x_map] != '\n')
-		*x_map += 1;
 }
 
 //Similar to player_init but will init different images to be used for walls, floors etc aswell as the size of the map
@@ -54,74 +52,27 @@ void	get_map_size(char **map, int *y_map, int *x_map)
 
 int	render(t_player *player)
 {
-	mlx_clear_window(player->vars.mlx, player->vars.win);
-	mlx_put_image_to_window(player->vars.mlx, player->vars.win,
-		player->pimg.img, (player->x_pos * 16), (player->y_pos * 16));
-	mlx_key_hook(player->vars.win, render_player, player);
-	mlx_string_put(player->vars.mlx, player->vars.win, 5, 15, 0xFFFFFF, "Steps:");
-	mlx_string_put(player->vars.mlx, player->vars.win, 75, 15, 0xFFFFFF, ft_itoa((long long) player->steps));
+	mlx_sync(MLX_SYNC_IMAGE_WRITABLE, player->s_floor.img);
+	mlx_sync(MLX_SYNC_IMAGE_WRITABLE, player->s_exit.img);
+	mlx_sync(MLX_SYNC_IMAGE_WRITABLE, player->s_pimg.img);
+	render_map(player);
+	mlx_hook(player->vars.win, ON_KEYDOWN, 0, render_player, player);
+	mlx_sync(MLX_SYNC_WIN_CMD_COMPLETED, player->vars.win);
 	return (0);
 }
-
-int	move_player(int keycode, t_player player)
-{
-	return (0);
-}
-
-/*  
-ON_KEYDOWN		2	int (*f)(int keycode, void *param)
-ON_KEYUP*		3	int (*f)(int keycode, void *param)
-ON_MOUSEDOWN*	4	int (*f)(int button, int x, int y, void *param)
-ON_MOUSEUP		5	int (*f)(int button, int x, int y, void *param)
-ON_MOUSEMOVE	6	int (*f)(int x, int y, void *param)
-ON_EXPOSE*		12	int (*f)(void *param)
-ON_DESTROY		17	int (*f)(void *param)
-*/
 
 int main(int argc, char *argv[])
 {
 	t_player	player;
 	char		**map;
+	t_data		s_img;
 
 	checkarg(argc);
 	map = convertmaptostring(argv[1]);
 	errorhandling(checkmap(map));
-	player.vars.mlx = mlx_init();
-	player.vars.win = mlx_new_window(player.vars.mlx, 600, 400, "So long, and thanks for all the fish!");
-	mlx_do_key_autorepeaton(player.vars.mlx);
 	player_init(&player, map);
-	mlx_hook(player.vars.win, ON_DESTROY, 0, closeondestroy, &player.vars);
-	mlx_loop_hook(player.vars.mlx, render, &player);
+	mlx_loop_hook(player.vars.mlx, &render, &player);
 	mlx_loop(player.vars.mlx);
 	
 	return (0);
 }
-
-/******* Function defs ********/
-	// mlx_clear_window;
-	// mlx_destroy_image;
-	// mlx_destroy_window;
-	// mlx_do_key_autorepeatoff;
-	// mlx_do_key_autorepeaton;
-	// mlx_do_sync;
-	// mlx_expose_hook;
-	// mlx_get_color_value;
-	// mlx_get_data_addr;
-	// mlx_get_screen_size;
-	// mlx_hook;
-	// mlx_key_hook;
-	// mlx_loop_hook;
-	// mlx_mouse_get_pos;
-	// mlx_mouse_hide;
-	// mlx_mouse_hook;
-	// mlx_mouse_move;
-	// mlx_mouse_show;
-	// mlx_new_image;
-	// mlx_new_window;
-	// mlx_pixel_put;
-	// mlx_png_file_to_image;
-	// mlx_put_image_to_window;
-	// mlx_string_put;
-	// mlx_sync;
-	// mlx_xpm_file_to_image;
-	// mlx_xpm_to_image;

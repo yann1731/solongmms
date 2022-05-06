@@ -6,6 +6,6 @@ void	my_xpm_file_to_image(char *pathtoimg, t_vars vars, t_data *img)
 	prefix = ft_strjoin(prefix, pathtoimg);
 	img->img = mlx_xpm_file_to_image(vars.mlx,
 			prefix, &img->width, &img->height);
-	my_get_data_addr(img);
+	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->size_line, &img->endian);
 	free(prefix);
 }

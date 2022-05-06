@@ -1,5 +1,8 @@
 #ifndef SO_LONG_H
 # define SO_LONG_H
+# define MLX_SYNC_IMAGE_WRITABLE 1
+# define MLX_SYNC_WIN_FLUSH_CMD 2
+# define MLX_SYNC_WIN_CMD_COMPLETED 3
 
 # include <stdlib.h>
 # include <unistd.h>
@@ -23,10 +26,6 @@ enum {
 	RIGHTKEY = 124,
 	ESC = 53
 };
-//126 = keyup
-//125 = keydown
-//123 = keyleft
-//124 = keyright
 
 typedef struct s_vars
 {
@@ -46,7 +45,7 @@ typedef struct	s_data
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
-	int		line_length;
+	int		size_line;
 	int		endian;
 	int		width;
 	int		height;
@@ -57,10 +56,13 @@ typedef struct s_player
 	char	**map;
 	t_vars	vars;
 	t_data	pimg;
+	t_data	s_pimg;
 	t_data	floor;
+	t_data	s_floor;
 	t_data	wall;
 	t_data	coll;
 	t_data	exit;
+	t_data	s_exit;
 	int		x_pos;
 	int		y_pos;
 	int		x_map;
@@ -89,5 +91,13 @@ void			my_xpm_file_to_image(char	*pathtoimg, t_vars vars, t_data *img);
 void			my_get_data_addr(t_data *img);
 int				render(t_player *player);
 void			update_frame(t_player *player, int keycode);
+void			get_map_size(char **map, int *y_map, int *x_map);
+int				closeondestroy(t_vars *data);
+void			closeprogram(t_player *player);
+void			render_map(t_player *player);
+void			move_up(t_player *player);
+void			move_down(t_player *player);
+void			move_left(t_player *player);
+void			move_right(t_player *player);
 
 #endif
