@@ -1,6 +1,6 @@
 #include "../include/so_long.h"
 
-void	render_map(t_player *player)
+void	render_floor(t_player *player)
 {
 	int x;
 	int y;
@@ -11,21 +11,39 @@ void	render_map(t_player *player)
 	{
 		while (player->map[y][x])
 		{
-			if (player->map[y][x] == '1')
-				mlx_put_image_to_window(player->vars.mlx, player->vars.win, player->wall.img, (x * 32), (y * 32));
 			if (player->map[y][x] == '0' || player->map[y][x] == 'P' || player->map[y][x] == 'C' || player->map[y][x] == 'E')
 				mlx_put_image_to_window(player->vars.mlx, player->vars.win, player->s_floor.img, (x * 32), (y * 32));
 			if (player->map[y][x] == 'E')
 				mlx_put_image_to_window(player->vars.mlx, player->vars.win, player->s_exit.img, (x * 32), (y * 32));
 			x++;
 		}
-		mlx_put_image_to_window(player->vars.mlx, player->vars.win, player->s_pimg.img, (player->x_pos * 32), (player->y_pos * 32));
 		y++;
 		x = 0;
 	}
 }
 
-int	render_player(int keycode, t_player *player)
+void	render_walls(t_player *player)
+{
+	int	x;
+	int	y;
+
+	x = 0;
+	y = 0;
+	while (player->map[y])
+	{
+		while (player->map[y][x])
+		{
+			if (player->map[y][x] == '1')
+				mlx_put_image_to_window(player->vars.mlx,
+					player->vars.win, player->wall.img, (x * 32), (y * 32));
+			x++;
+		}
+		y++;
+		x = 0;
+	}
+}
+
+int	move_player(int keycode, t_player *player)
 {
 	int		x;
 	int		y;
@@ -55,8 +73,8 @@ int	render(t_player *player)
 	mlx_sync(MLX_SYNC_IMAGE_WRITABLE, player->s_floor.img);
 	mlx_sync(MLX_SYNC_IMAGE_WRITABLE, player->s_exit.img);
 	mlx_sync(MLX_SYNC_IMAGE_WRITABLE, player->s_pimg.img);
-	render_map(player);
-	mlx_hook(player->vars.win, ON_KEYDOWN, 0, render_player, player);
+	mlx_put_image_to_window(player->vars.mlx, player->vars.win, player->s_pimg.img, (player->x_pos * 32), (player->y_pos * 32));
+	mlx_hook(player->vars.win, ON_KEYDOWN, 0, move_player, player);
 	mlx_sync(MLX_SYNC_WIN_CMD_COMPLETED, player->vars.win);
 	return (0);
 }
@@ -71,6 +89,8 @@ int main(int argc, char *argv[])
 	map = convertmaptostring(argv[1]);
 	errorhandling(checkmap(map));
 	player_init(&player, map);
+	render_walls(&player);
+	render_floor(&player);
 	mlx_loop_hook(player.vars.mlx, &render, &player);
 	mlx_loop(player.vars.mlx);
 	

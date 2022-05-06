@@ -94,7 +94,7 @@ void			update_frame(t_player *player, int keycode);
 void			get_map_size(char **map, int *y_map, int *x_map);
 int				closeondestroy(t_vars *data);
 void			closeprogram(t_player *player);
-void			render_map(t_player *player);
+void			render_floor(t_player *player);
 void			move_up(t_player *player);
 void			move_down(t_player *player);
 void			move_left(t_player *player);
