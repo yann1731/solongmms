@@ -1,6 +1,7 @@
 SRCS =			checkarg.c checkmap.c checkmap_utils.c errorhandling.c main.c image_scale_init.c \
 				my_mlx_pixel_put.c get_colors.c player_init.c get_player_pos.c my_xpm_file_to_image.c \
-				my_get_data_addr.c
+				my_get_data_addr.c closeondestroy.c get_map_size.c closeprogram.c move_up.c move_down.c \
+				move_left.c move_right.c
 
 OBJS =			${SRCS:.c=.o}
 
@@ -14,7 +15,7 @@ LIBFTPATH =		libft/
 
 LIBFT =			libft.a
 
-MLX =			libmlx.dylib
+MLX =			-lmlx
 
 FRAMEWORK =		-lmlx -framework OpenGL -framework AppKit
 
@@ -27,7 +28,7 @@ ${LIBFT}:
 				make -C ${LIBFTPATH} all
 
 ${NAME}:		${OBJS} ${LIBFT}
-				${CC} ${CFLAGS} ${OBJS} ${FRAMEWORK} ${LIBFTPATH}${LIBFT} -o ${NAME}
+				${CC} ${CFLAGS} ${FRAMEWORK} ${OBJS} ${LIBFTPATH}${LIBFT} -o ${NAME}
 
 all: ${NAME}
 
