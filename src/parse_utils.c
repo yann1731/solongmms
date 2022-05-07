@@ -83,7 +83,7 @@ int	checkcriteria(char **map, int lines, t_criteria info)
 			if (map[y][x] == 'C')
 				info.c = 1;
 			if (map[y][x] == 'P')
-				info.p = 1;
+				info.p += 1;
 			if (map[y][x] == 'E')
 				info.e = 1;
 		}

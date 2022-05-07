@@ -19,6 +19,7 @@ int	checkmap(char **map)
 	t_criteria	info;
 
 	lines = 0;
+	initinfo(&info);
 	while (map[lines])
 		lines++;
 	x = -1;
