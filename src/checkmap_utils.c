@@ -58,14 +58,14 @@ int	countlines(char *mapfile)
 
 void	initinfo(t_criteria *info)
 {
-	info->C = 0;
-	info->E = 0;
-	info->P = 0;
+	info->c = 0;
+	info->e = 0;
+	info->p = 0;
 }
 
 int	parsecriteria(t_criteria info)
 {
-	if (info.C == 1 && info.E == 1 && info.P == 1)
+	if (info.c == 1 && info.e == 1 && info.p == 1)
 		return (1);
 	return (0);
 }

@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   so_long.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yst-laur <yst-laur@student.42quebec.c      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/07 11:08:30 by yst-laur          #+#    #+#             */
+/*   Updated: 2022/05/07 11:08:35 by yst-laur         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #ifndef SO_LONG_H
 # define SO_LONG_H
 # define MLX_SYNC_IMAGE_WRITABLE 1
@@ -35,12 +46,12 @@ typedef struct s_vars
 
 typedef struct s_criteria
 {
-	int	C;
-	int	P;
-	int	E;
+	int	c;
+	int	p;
+	int	e;
 }	t_criteria;
 
-typedef struct	s_data
+typedef struct s_data
 {
 	void	*img;
 	char	*addr;
@@ -87,12 +98,12 @@ int				checkshape(char **map, int lines);
 void			checkarg(int argc);
 void			initinfo(t_criteria *info);
 void			errorhandling(int status);
-unsigned int    get_colors(t_data *data, int x, int y);
-t_data    		image_scale_init(t_data *image, float scale, void *mlx);
+unsigned int	get_colors(t_data *data, int x, int y);
+t_data			image_scale_init(t_data *image, float scale, void *mlx);
 void			my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void			get_player_pos(char **map, int *x_pos, int *y_pos);
 void			player_init(t_player *player, char **map);
-void			my_xpm_file_to_image(char	*pathtoimg, t_vars vars, t_data *img);
+void			my_xpm_file_to_image(char *pathtoimg, t_vars vars, t_data *img);
 void			my_get_data_addr(t_data *img);
 int				render(t_player *player);
 void			update_frame(t_player *player, int keycode);
