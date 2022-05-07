@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   basefunctions.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yst-laur <yst-laur@student.42quebec.c      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/07 10:46:39 by yst-laur          #+#    #+#             */
+/*   Updated: 2022/05/07 10:46:44 by yst-laur         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "libft.h"
 
 int	validateflag(int c)
@@ -46,6 +57,7 @@ int	stringlen(const char *s, int *index)
 	*index = i + 1;
 	return (res + 1);
 }
+
 void	printformat(t_flags format, va_list ap, int *res)
 {
 	if (format.flag == 'c')

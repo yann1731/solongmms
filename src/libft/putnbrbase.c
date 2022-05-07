@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   putnbrbase.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yst-laur <yst-laur@student.42quebec.c      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/07 10:51:35 by yst-laur          #+#    #+#             */
+/*   Updated: 2022/05/07 10:51:39 by yst-laur         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "libft.h"
 
 void	ft_putnbr_base_bonus(t_flags format, unsigned int nbr,
@@ -13,4 +24,3 @@ void	ft_putnbr_base_bonus(t_flags format, unsigned int nbr,
 	if (nbr <= 16)
 		printchar(base[nbr], res);
 }
-

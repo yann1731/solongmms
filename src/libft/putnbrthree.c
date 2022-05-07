@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   putnbrthree.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yst-laur <yst-laur@student.42quebec.c      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/07 10:51:49 by yst-laur          #+#    #+#             */
+/*   Updated: 2022/05/07 10:51:52 by yst-laur         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "libft.h"
 
 void	printnumspace(t_flags format, int n, int *res)
@@ -25,4 +36,3 @@ void	printnumzero(t_flags format, int n, int *res)
 	while ((--format.fieldwidth - numsizedot(n) - 1) >= 0)
 		*res += write(1, "0", 1);
 }
-

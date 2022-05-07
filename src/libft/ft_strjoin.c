@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
+#include <stdlib.h>
 
 static int	total_str_len(char const *s1, char const *s2)
 {
@@ -26,9 +27,9 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	char		*ns;
 
 	if (!s1)
-		return (ft_strdup(s2));
+		return ((char *)s2);
 	if (!s2)
-		return (ft_strdup(s1));
+		return ((char *)s1);
 	ns = malloc((total_str_len(s1, s2) + 1 * sizeof(char)));
 	if (ns == NULL)
 		return (NULL);

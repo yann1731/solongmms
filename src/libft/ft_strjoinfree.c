@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strjoinfree.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yst-laur <yst-laur@student.42quebec>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/12 10:31:28 by yst-laur          #+#    #+#             */
+/*   Updated: 2022/04/12 10:31:32 by yst-laur         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "libft.h"
 
 static int	total_str_len(char const *s1, char const *s2)
@@ -15,9 +26,9 @@ char	*ft_strjoinfree(char const *s1, char const *s2)
 	char		*ns;
 
 	if (!s1)
-		return (ft_strdup(s2));
+		return ((char *)s2);
 	if (!s2)
-		return (ft_strdup(s1));
+		return ((char *)s1);
 	ns = malloc((total_str_len(s1, s2) + 1 * sizeof(char)));
 	if (ns == NULL)
 		return (NULL);

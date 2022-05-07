@@ -1,8 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yst-laur <yst-laur@student.42quebec.c      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/07 10:49:09 by yst-laur          #+#    #+#             */
+/*   Updated: 2022/05/07 10:49:12 by yst-laur         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "libft.h"
 
-static char *re_alloc(int c, size_t len, char *tofree)
+static char	*re_alloc(int c, size_t len, char *tofree)
 {
-	char *rstr;
+	char			*rstr;
 	size_t			cd;
 	unsigned char	cout;
 	unsigned char	*ptr;
@@ -40,7 +51,7 @@ static size_t	findline(char *s, char c, size_t *i)
 	return (0);
 }
 
-static char *read_line(char *s, size_t *ptr, char *buffer)
+static char	*read_line(char *s, size_t *ptr, char *buffer)
 {
 	char	*nstr;
 	size_t	count;
@@ -68,10 +79,10 @@ static char *read_line(char *s, size_t *ptr, char *buffer)
 	return (nstr);
 }
 
-char    *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
 	static char		*str;
-	char		*buf;
+	char			*buf;
 	static size_t	index;
 	static size_t	index2;
 	int				res;
