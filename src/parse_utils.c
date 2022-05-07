@@ -81,11 +81,11 @@ int	checkcriteria(char **map, int lines, t_criteria info)
 		while (++x < (limit - 1))
 		{
 			if (map[y][x] == 'C')
-				info.C = 1;
+				info.c = 1;
 			if (map[y][x] == 'P')
-				info.P = 1;
+				info.p = 1;
 			if (map[y][x] == 'E')
-				info.E = 1;
+				info.e = 1;
 		}
 		x = -1;
 	}
