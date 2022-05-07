@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rendering_utils.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yst-laur <yst-laur@student.42quebec.c      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/07 10:33:39 by yst-laur          #+#    #+#             */
+/*   Updated: 2022/05/07 10:33:43 by yst-laur         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "../include/so_long.h"
 
 int	render(t_player *player)
@@ -18,9 +29,9 @@ int	render(t_player *player)
 
 void	render_floor(t_player *player)
 {
-	int x;
-	int y;
-	
+	int	x;
+	int	y;
+
 	x = 0;
 	y = 0;
 	replace_p(player);
@@ -28,12 +39,16 @@ void	render_floor(t_player *player)
 	{
 		while (player->map[y][x])
 		{
-			if (player->map[y][x] == '0' || player->map[y][x] == 'C' || player->map[y][x] == 'E')
-				mlx_put_image_to_window(player->vars.mlx, player->vars.win, player->s_floor.img, (x * 32), (y * 32));
+			if (player->map[y][x] == '0' || player->map[y][x] == 'C'
+					|| player->map[y][x] == 'E')
+				mlx_put_image_to_window(player->vars.mlx, player->vars.win,
+					player->s_floor.img, (x * 32), (y * 32));
 			if (player->map[y][x] == 'E')
-				mlx_put_image_to_window(player->vars.mlx, player->vars.win, player->s_exit.img, (x * 32), (y * 32));
+				mlx_put_image_to_window(player->vars.mlx,
+					player->vars.win, player->s_exit.img, (x * 32), (y * 32));
 			if (player->map[y][x] == 'C')
-				my_mlx_put_img(&player->vars, &player->s_coll, (x * 32), (y * 32));
+				my_mlx_put_img(&player->vars,
+					&player->s_coll, (x * 32), (y * 32));
 			x++;
 		}
 		y++;
@@ -61,4 +76,3 @@ void	render_walls(t_player *player)
 		x = 0;
 	}
 }
-
