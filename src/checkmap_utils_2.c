@@ -51,3 +51,30 @@ int	checkmapformat(char *argv)
 		return (1);
 	return (0);
 }
+
+void	memfree(char **map)
+{
+	int	i;
+
+	i = -1;
+	while (map[++i])
+		free(map[i]);
+	free(map);
+}
+
+void	checkmalloc(char *str, char **map)
+{
+	int	i;
+
+	i = -1;
+	if (!str)
+	{
+		memfree(map);
+		exit(1);
+	}
+	if (!map && str)
+	{
+		free(str);
+		exit(1);
+	}
+}

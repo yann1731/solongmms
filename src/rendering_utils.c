@@ -19,6 +19,7 @@ int	render(t_player *player)
 	{
 		if (player->held_collectibles == player->max_collectibles)
 		{
+			memfree(player->map);
 			printf("GG!!\n");
 			exit(1);
 		}

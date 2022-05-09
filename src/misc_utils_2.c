@@ -11,14 +11,16 @@
 /* ************************************************************************** */
 #include "../include/so_long.h"
 
-int	closeondestroy(t_vars *data)
+int	closeondestroy(t_player *player)
 {
-	mlx_destroy_window(data->mlx, data->win);
+	memfree(player->map);
+	mlx_destroy_window(player->vars.mlx, player->vars.win);
 	exit(0);
 }
 
 void	closeprogram(t_player *player)
 {
+	memfree(player->map);
 	mlx_destroy_window(player->vars.mlx, player->vars.win);
 	exit(0);
 }
@@ -27,6 +29,23 @@ void	errorhandling(int status)
 {
 	if (status == 0)
 	{
+		write(2, "Error\n", ft_strlen("Error\n"));
+		write(2, "Incorrect map parameters\n",
+			ft_strlen("Incorrect map parameters\n"));
+		exit(1);
+	}
+	if (status == -1)
+	{
+		perror("Error");
+		exit(1);
+	}
+}
+
+void	errorhandlingmap(int status, char **map)
+{
+	if (status == 0)
+	{
+		memfree(map);
 		write(2, "Error\n", ft_strlen("Error\n"));
 		write(2, "Incorrect map parameters\n",
 			ft_strlen("Incorrect map parameters\n"));

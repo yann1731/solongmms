@@ -28,6 +28,7 @@ char	**convertmaptostring(char *mapfile)
 	while (lines-- > 0)
 	{
 		str = get_next_line(fd);
+		checkmalloc(str, map);
 		map[i] = ft_strdup(str);
 		free(str);
 		i++;

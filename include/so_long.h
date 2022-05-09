@@ -108,7 +108,7 @@ void			my_get_data_addr(t_data *img);
 int				render(t_player *player);
 void			update_frame(t_player *player, int keycode);
 void			get_map_size(char **map, int *y_map, int *x_map);
-int				closeondestroy(t_vars *data);
+int				closeondestroy(t_player *player);
 void			closeprogram(t_player *player);
 void			render_floor(t_player *player);
 void			move_up(t_player *player);
@@ -126,5 +126,8 @@ void			update_coll(t_player *player, int x, int y);
 void			update_ocoll(t_player *player, int x, int y);
 void			update_exit(t_player *player, int x, int y);
 int				checkmapformat(char *argv);
+void			memfree(char **map);
+void			checkmalloc(char *str, char **map);
+void			errorhandlingmap(int status, char **map);
 
 #endif

@@ -20,10 +20,11 @@ int	main(int argc, char *argv[])
 	checkarg(argc);
 	errorhandling(checkmapformat(argv[1]));
 	map = convertmaptostring(argv[1]);
-	errorhandling(checkmap(map));
+	errorhandlingmap(checkmap(map), map);
 	player_init(&player, map);
 	render_walls(&player);
 	render_floor(&player);
+	mlx_hook(player.vars.win, ON_DESTROY, 0, closeondestroy, &player);
 	mlx_loop_hook(player.vars.mlx, &render, &player);
 	mlx_loop(player.vars.mlx);
 	return (0);
